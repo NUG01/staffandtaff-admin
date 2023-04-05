@@ -1,14 +1,27 @@
-const people = [
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  // More people...
-];
+import { Link } from "react-router-dom";
 
-export default function Example() {
+export default function MainTable(props) {
+  let data;
+  let columnNames;
+  let keys;
+  let columns;
+  if (props.data[0] || props.data == undefined) {
+    data = props.data;
+    const myObj = props.data[0];
+    keys = Object.keys(myObj);
+    columnNames = keys.map((item) => (
+      <th
+        key={item}
+        scope="col"
+        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+      >
+        {item}
+      </th>
+    ));
+  } else {
+    return <h2>Return</h2>;
+  }
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
@@ -36,13 +49,14 @@ export default function Example() {
             <table className="min-w-full divide-y divide-gray-300">
               <thead>
                 <tr>
-                  <th
+                  {/* <th
                     scope="col"
                     className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"
                   >
                     Name
-                  </th>
-                  <th
+                  </th> */}
+                  {columnNames}
+                  {/* <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
@@ -58,38 +72,104 @@ export default function Example() {
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Role
+                    Email
                   </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Role
+                  </th> */}
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-3">
                     <span className="sr-only">Edit</span>
                   </th>
                 </tr>
               </thead>
               <tbody className="bg-white">
-                {people.map((person, personIdx) => (
+                {data.map((item, personIdx) => (
                   <tr
-                    key={person.email}
+                    key={item.id}
                     className={personIdx % 2 === 0 ? undefined : "bg-gray-50"}
                   >
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                      {person.name}
+                    {keys.map((key) => {
+                      return (
+                        <td
+                          key={key}
+                          className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                        >
+                          {item[key]}
+                        </td>
+                      );
+                    })}
+                    ;
+                    {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {item.salary}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {person.title}
+                      {item.salary}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {person.email}
+                      {item.salary}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {person.role}
+                      {item.salary}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {item.salary}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {item.salary}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {item.salary}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {item.salary}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {item.salary}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {item.salary}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {item.salary}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {item.salary}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {item.salary}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {item.salary}
+                    </td> */}
+                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                      <Link
+                        href="#"
+                        className="text-indigo-800 hover:text-indigo-900"
+                      >
+                        Details
+                        <span className="sr-only">, {item.id}</span>
+                      </Link>
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                      <a
+                      <Link
                         href="#"
-                        className="text-indigo-600 hover:text-indigo-900"
+                        className="text-indigo-500 hover:text-indigo-900"
                       >
-                        Edit<span className="sr-only">, {person.name}</span>
-                      </a>
+                        Edit
+                        <span className="sr-only">, {item.id}</span>
+                      </Link>
+                    </td>
+                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                      <Link
+                        href="#"
+                        className="text-red-600 hover:text-indigo-900"
+                      >
+                        Delete
+                        <span className="sr-only">, {item.id}</span>
+                      </Link>
                     </td>
                   </tr>
                 ))}

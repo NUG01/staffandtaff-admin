@@ -13,7 +13,7 @@
   ```
 */
 import { Fragment, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, Link } from "react-router-dom";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -32,30 +32,53 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 
-const navigation = [
-  { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
-  { name: "Team", href: "#", icon: UsersIcon, current: false },
-  { name: "Projects", href: "#", icon: FolderIcon, current: false },
-  { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
-  { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
-  { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
-];
-const teams = [
-  { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },
-  { id: 2, name: "Tailwind Labs", href: "#", initial: "T", current: false },
-  { id: 3, name: "Workcation", href: "#", initial: "W", current: false },
-];
-const userNavigation = [
-  { name: "Your profile", href: "#" },
-  { name: "Sign out", href: "#" },
-];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
-export default function Example() {
+export default function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  const navigation = [
+    {
+      name: "Dashboard",
+      href: "/dashboard",
+      icon: HomeIcon,
+      current: pathname == "/dashboard" ? true : false,
+    },
+    {
+      name: "Jobs",
+      href: "/dashboard/jobs",
+      icon: UsersIcon,
+      current: pathname == "/dashboard/jobs" ? true : false,
+    },
+    {
+      name: "Establishment",
+      href: "/dashboard/establishments",
+      icon: FolderIcon,
+      current: pathname == "/dashboard/establishments" ? true : false,
+    },
+    { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
+    {
+      name: "Documents",
+      href: "#",
+      icon: DocumentDuplicateIcon,
+      current: false,
+    },
+    { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
+  ];
+  const teams = [
+    { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },
+    { id: 2, name: "Tailwind Labs", href: "#", initial: "T", current: false },
+    { id: 3, name: "Workcation", href: "#", initial: "W", current: false },
+  ];
+  const userNavigation = [
+    { name: "Your profile", href: "#" },
+    { name: "Sign out", href: "#" },
+  ];
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   return (
     <>
@@ -135,8 +158,8 @@ export default function Example() {
                           <ul role="list" className="-mx-2 space-y-1">
                             {navigation.map((item) => (
                               <li key={item.name}>
-                                <a
-                                  href={item.href}
+                                <Link
+                                  to={item.href}
                                   className={classNames(
                                     item.current
                                       ? "bg-gray-800 text-white"
@@ -149,7 +172,7 @@ export default function Example() {
                                     aria-hidden="true"
                                   />
                                   {item.name}
-                                </a>
+                                </Link>
                               </li>
                             ))}
                           </ul>
@@ -217,8 +240,8 @@ export default function Example() {
                   <ul role="list" className="-mx-2 space-y-1">
                     {navigation.map((item) => (
                       <li key={item.name}>
-                        <a
-                          href={item.href}
+                        <Link
+                          to={item.href}
                           className={classNames(
                             item.current
                               ? "bg-gray-800 text-white"
@@ -231,7 +254,7 @@ export default function Example() {
                             aria-hidden="true"
                           />
                           {item.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -382,8 +405,9 @@ export default function Example() {
           </div>
 
           <main className="py-10">
-            <div className="px-4 sm:px-6 lg:px-8">{/* Your content */}</div>
-            <Outlet></Outlet>{" "}
+            {/* <div className="px-1 sm:px-6 lg:px-8">
+            </div> */}
+            <Outlet></Outlet>
           </main>
         </div>
       </div>
