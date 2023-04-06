@@ -4,6 +4,7 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 const initialState = {
   jobs: [],
   establishments: [],
+  users: [],
 };
 
 const globalSlice = createSlice({
@@ -15,6 +16,9 @@ const globalSlice = createSlice({
     },
     setEstablishments(state, action) {
       state.establishments = action.payload;
+    },
+    setUsers(state, action) {
+      state.users = action.payload;
     },
   },
 });

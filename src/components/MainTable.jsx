@@ -1,25 +1,56 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import BasicAxios from "../helpers/axios";
+import { useState } from "react";
 
 export default function MainTable(props) {
-  let data;
+  const { pathname } = useLocation();
+  let [data, setData] = useState(props.data);
+  // let data;
   let columnNames;
   let keys;
   let columns;
-  if (props.data[0] || props.data == undefined) {
+  if (props.data[0]) {
     data = props.data;
     const myObj = props.data[0];
     keys = Object.keys(myObj);
-    columnNames = keys.map((item) => (
-      <th
-        key={item}
-        scope="col"
-        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-      >
-        {item}
-      </th>
-    ));
+    columnNames = keys.map((item) => {
+      if (item == "id") return;
+      return (
+        <th
+          key={item}
+          scope="col"
+          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+        >
+          {item.replaceAll("_", " ")}
+        </th>
+      );
+    });
   } else {
-    return <h2>Return</h2>;
+    return <h2>No data</h2>;
+  }
+
+  function deleteHandler(id) {
+    if (props.type === "jobs") {
+      BasicAxios.delete("admin/jobs/delete/" + id).then((res) => {
+        // console.log(res);
+        // setData(res.data);
+      });
+    }
+    if (props.type === "establishments") {
+      BasicAxios.delete("admin/establishments/delete/" + id).then((res) => {
+        // setData(res.data);
+        // console.log(res);
+      });
+    }
+    if (props.type === "users") {
+      BasicAxios.delete("admin/user/delete/" + id).then((res) => {
+        // setData(res.data);
+        // console.log(res);
+      });
+    }
+    // setData((oldValues) => {
+    //   return oldValues.filter((item) => item.id !== id);
+    // });
   }
 
   return (
@@ -27,11 +58,10 @@ export default function MainTable(props) {
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">
-            Users
+            {props.type.charAt(0).toUpperCase() + props.type.slice(1)}
           </h1>
           <p className="mt-2 text-sm text-gray-700">
-            A list of all the users in your account including their name, title,
-            email and role.
+            A list of all the {props.type} in your account.
           </p>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -39,7 +69,7 @@ export default function MainTable(props) {
             type="button"
             className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Add user
+            Add {props.type.charAt(0).toUpperCase() + props.type.slice(1, -1)}
           </button>
         </div>
       </div>
@@ -92,6 +122,7 @@ export default function MainTable(props) {
                     className={personIdx % 2 === 0 ? undefined : "bg-gray-50"}
                   >
                     {keys.map((key) => {
+                      if (key == "id") return;
                       return (
                         <td
                           key={key}
@@ -146,7 +177,7 @@ export default function MainTable(props) {
                     </td> */}
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                       <Link
-                        href="#"
+                        to={pathname.slice(0, -1) + "/" + item.id}
                         className="text-indigo-800 hover:text-indigo-900"
                       >
                         Details
@@ -155,7 +186,7 @@ export default function MainTable(props) {
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                       <Link
-                        href="#"
+                        to={pathname.slice(0, -1) + "/edit/" + item.id}
                         className="text-indigo-500 hover:text-indigo-900"
                       >
                         Edit
@@ -167,7 +198,9 @@ export default function MainTable(props) {
                         href="#"
                         className="text-red-600 hover:text-indigo-900"
                       >
-                        Delete
+                        <span onClick={() => deleteHandler(item.id)}>
+                          Delete
+                        </span>
                         <span className="sr-only">, {item.id}</span>
                       </Link>
                     </td>

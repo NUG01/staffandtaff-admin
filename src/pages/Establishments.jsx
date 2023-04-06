@@ -35,8 +35,8 @@ function Establishment() {
 
   return (
     <>
-      {!data && <h2 style={{ color: "black" }}>hello</h2>}
-      {data && <MainTable data={data}></MainTable>}
+      {!data && <h2 style={{ color: "black" }}>No data</h2>}
+      {data && <MainTable data={data} type='establishments'></MainTable>}
     </>
   );
 }

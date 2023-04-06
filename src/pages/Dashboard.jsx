@@ -46,31 +46,30 @@ export default function MainLayout() {
       current: pathname == "/dashboard" ? true : false,
     },
     {
-      name: "Jobs",
-      href: "/dashboard/jobs",
-      icon: UsersIcon,
-      current: pathname == "/dashboard/jobs" ? true : false,
-    },
-    {
-      name: "Establishment",
+      name: "Establishments",
       href: "/dashboard/establishments",
       icon: FolderIcon,
       current: pathname == "/dashboard/establishments" ? true : false,
     },
-    { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
     {
-      name: "Documents",
-      href: "#",
-      icon: DocumentDuplicateIcon,
-      current: false,
+      name: "Jobs",
+      href: "/dashboard/jobs",
+      icon: FolderIcon,
+      current: pathname == "/dashboard/jobs" ? true : false,
+    },
+    {
+      name: "Users",
+      href: "/dashboard/users",
+      icon: UsersIcon,
+      current: pathname == "/dashboard/users" ? true : false,
     },
     { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
   ];
-  const teams = [
-    { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },
-    { id: 2, name: "Tailwind Labs", href: "#", initial: "T", current: false },
-    { id: 3, name: "Workcation", href: "#", initial: "W", current: false },
-  ];
+  // const teams = [
+  //   { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },
+  //   { id: 2, name: "Tailwind Labs", href: "#", initial: "T", current: false },
+  //   { id: 3, name: "Workcation", href: "#", initial: "W", current: false },
+  // ];
   const userNavigation = [
     { name: "Your profile", href: "#" },
     { name: "Sign out", href: "#" },
@@ -178,7 +177,7 @@ export default function MainLayout() {
                           </ul>
                         </li>
                         <li>
-                          <div className="text-xs font-semibold leading-6 text-gray-400">
+                          {/* <div className="text-xs font-semibold leading-6 text-gray-400">
                             Your teams
                           </div>
                           <ul role="list" className="-mx-2 mt-2 space-y-1">
@@ -200,7 +199,7 @@ export default function MainLayout() {
                                 </a>
                               </li>
                             ))}
-                          </ul>
+                          </ul> */}
                         </li>
                         <li className="mt-auto">
                           <a
@@ -260,7 +259,7 @@ export default function MainLayout() {
                   </ul>
                 </li>
                 <li>
-                  <div className="text-xs font-semibold leading-6 text-gray-400">
+                  {/* <div className="text-xs font-semibold leading-6 text-gray-400">
                     Your teams
                   </div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
@@ -282,7 +281,7 @@ export default function MainLayout() {
                         </a>
                       </li>
                     ))}
-                  </ul>
+                  </ul> */}
                 </li>
                 <li className="mt-auto">
                   <a

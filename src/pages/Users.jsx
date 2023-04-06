@@ -9,7 +9,7 @@ import { useEffect, useState, useCallback } from "react";
 
 function Jobs() {
   const [data, setData] = useState([]);
-  let jobs = useSelector((state) => state.jobs);
+  let users = useSelector((state) => state.users);
 
   const dispatch = useDispatch();
   // const fetchJobs = useCallback(async () => {
@@ -21,8 +21,8 @@ function Jobs() {
   useEffect(() => {
     // fetchJobs();
 
-    BasicAxios.get("admin/jobs").then((res) => {
-      dispatch(globalActions.setJobs(res.data.data));
+    BasicAxios.get("admin/users").then((res) => {
+      dispatch(globalActions.setUsers(res.data.data));
       setData(res?.data?.data);
     });
   }, []);
@@ -30,7 +30,7 @@ function Jobs() {
   return (
     <>
       {!data && <h2 style={{ color: "black" }}>hello</h2>}
-      {data && <MainTable data={data} type='jobs'></MainTable>}
+      {data && <MainTable data={data} type="users"></MainTable>}
     </>
   );
 }
