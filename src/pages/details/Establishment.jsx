@@ -13,6 +13,8 @@ function User() {
       setData(res?.data);
     });
   }, []);
+
+  console.log(data);
   return (
     <>
       <MainDetails data={data} type="establishment"></MainDetails>

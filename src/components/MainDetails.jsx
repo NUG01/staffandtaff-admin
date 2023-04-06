@@ -2,8 +2,7 @@ import { PaperClipIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 
 export default function MainDetails(props) {
-  const user = props.data;
-  console.log(user);
+  const data = props.data;
   return (
     <div className="overflow-hidden bg-white shadow sm:rounded-lg">
       <div className="px-4 py-5 sm:px-6">
@@ -17,7 +16,7 @@ export default function MainDetails(props) {
       </div>
       <div className="border-t border-gray-200">
         <dl>
-          {Object.keys(user).map((key, i) => {
+          {Object.keys(data).map((key, i) => {
             if (key == "id") return;
             return (
               <div
@@ -33,7 +32,14 @@ export default function MainDetails(props) {
                   {key.replaceAll("_", " ")}
                 </dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                  {user[key]}
+                  {props.type == "user" && data[key]}
+                  {props.type == "job" && data[key]}
+                  {props.type == "establishment" &&
+                    key != "industry" &&
+                    data[key]}
+                  {props.type == "establishment" &&
+                    key == "industry" &&
+                    data[key]?.name}
                 </dd>
               </div>
             );
