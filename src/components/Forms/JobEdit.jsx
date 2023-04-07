@@ -97,9 +97,6 @@ export default function JobEdit(props) {
   function cityHandler(ev) {
     console.log(location, ev.target.value);
     setLocation({
-      // longitude: props.data?.location?.longitude,
-      // latitude: props.data?.location?.latitude,
-      // country_code: props.data?.location?.country_code,
       city: ev.target.value,
     });
   }
@@ -127,9 +124,6 @@ export default function JobEdit(props) {
   function chooseCity(ev) {
     console.log(ev.target.getAttribute("value"));
     setLocation({
-      // longitude: props.data?.location?.longitude,
-      // latitude: props.data?.location?.latitude,
-      // country_code: props.data?.location?.country_code,
       city: ev.target.getAttribute("value"),
     });
     setShowCities(false);
@@ -168,13 +162,15 @@ export default function JobEdit(props) {
             <JobInput
               name="est-name"
               label="Establishment Name"
-              value={!estName ? props.data.establishment_name : estName}
+              value={
+                estName == undefined ? props.data.establishment_name : estName
+              }
               onChange={estNameHandler}
             ></JobInput>
             <JobInput
               name="position"
               label="Position"
-              value={!position ? props.data.position : position}
+              value={position == undefined ? props.data.position : position}
               onClick={positionHandler}
             ></JobInput>
 
@@ -197,7 +193,7 @@ export default function JobEdit(props) {
                   name="search"
                   id="search"
                   value={
-                    location?.city ? location?.city : props.data?.location?.city
+                    location?.city ? location.city : props.data?.location?.city
                   }
                   className="px-[6px] block w-full rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -289,7 +285,7 @@ export default function JobEdit(props) {
               type="number"
               name="salary"
               label="Salary"
-              value={salary ? salary : props.data.salary}
+              value={salary != undefined ? salary : props.data.salary}
               onChange={salaryHnadler}
             ></JobInput>
 
@@ -307,7 +303,11 @@ export default function JobEdit(props) {
                   name="description"
                   id="description"
                   className="block p-[12px] w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6"
-                  value={description ? description : props.data.description}
+                  value={
+                    description != undefined
+                      ? description
+                      : props.data.description
+                  }
                 />
               </div>
             </div>

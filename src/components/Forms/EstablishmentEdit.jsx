@@ -15,14 +15,10 @@ export default function EstablishmentEdit(props) {
   );
   const [industryId, setIndustryId] = useState(data?.industry?.id);
 
-  const [name, setName] = useState("");
-  const [companyName, setCompanyName] = useState("");
-  const [address, setAddress] = useState("");
-  const [description, setDescription] = useState("");
-
-  //country or data.country
-  //employees or data.employees
-  //industryId or data.industry.id
+  const [name, setName] = useState(data.name);
+  const [companyName, setCompanyName] = useState(data.companyName);
+  const [address, setAddress] = useState(data.address);
+  const [description, setDescription] = useState(data.description);
 
   function submitHandler(event) {
     event.preventDefault();
@@ -105,14 +101,14 @@ export default function EstablishmentEdit(props) {
               name="name"
               label="Name"
               complete="given-name"
-              value={!name ? data.name : name}
+              value={name == undefined ? data.name : name}
               onChange={nameHandler}
             ></EstablishmentInput>
             <EstablishmentInput
               name="company_name"
               label="Company Name"
               complete="given-company_name"
-              value={!companyName ? data.company_name : companyName}
+              value={companyName == undefined ? data.company_name : companyName}
               onChange={companyNameHandler}
             ></EstablishmentInput>
             <div className="py-[12px]">
@@ -185,7 +181,7 @@ export default function EstablishmentEdit(props) {
               name="address"
               label="Address"
               complete="given-address"
-              value={!address ? data.address : address}
+              value={address == undefined ? data.address : address}
               onChange={addressHnadler}
             ></EstablishmentInput>
             <EstablishmentInput
@@ -194,7 +190,9 @@ export default function EstablishmentEdit(props) {
               label="Number of Employees"
               complete="given-number_employees"
               value={
-                numberOfEmployees ? numberOfEmployees : data.number_of_employees
+                numberOfEmployees != undefined
+                  ? numberOfEmployees
+                  : data.number_of_employees
               }
               onChange={numbersHnadler}
             ></EstablishmentInput>
@@ -213,7 +211,9 @@ export default function EstablishmentEdit(props) {
                   name="description"
                   id="description"
                   className="block p-[12px] w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6"
-                  defaultValue={data.description}
+                  defaultValue={
+                    description == undefined ? data.description : description
+                  }
                 />
               </div>
             </div>
@@ -239,12 +239,6 @@ export default function EstablishmentEdit(props) {
       )}
 
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        {/* <button
-          type="button"
-          className="text-sm font-semibold leading-6 text-gray-900"
-        >
-          Cancel
-        </button> */}
         <button
           type="submit"
           className="inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
