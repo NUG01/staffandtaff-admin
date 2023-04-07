@@ -1,11 +1,14 @@
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import EstablishmentInput from "./inputs/EstablishmentInput";
-import styles from "./FormStyles.module.css";
 import { useState, useEffect } from "react";
 import BasicAxios from "../../helpers/axios";
+import { useParams } from "react-router-dom";
 
 export default function EstablishmentEdit(props) {
   const data = props.data;
+  const params = useParams();
+  const [errorMessage, setErrorMessage] = useState([]);
+  const [successMessage, setSuccessMessage] = useState("");
   const [country, setCountry] = useState(data.country);
   const [numberOfEmployees, setNumberOfEmployees] = useState(
     data.number_of_employees
@@ -16,13 +19,16 @@ export default function EstablishmentEdit(props) {
   const [companyName, setCompanyName] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
+
   //country or data.country
   //employees or data.employees
   //industryId or data.industry.id
 
   function submitHandler(event) {
     event.preventDefault();
+    setErrorMessage("");
     const payload = {
+      id: params.id,
       name: name ? name : data.name,
       company_name: companyName ? companyName : data.company_name,
       address: address ? address : data.address,
@@ -33,7 +39,16 @@ export default function EstablishmentEdit(props) {
         : data.number_of_employees,
       description: description ? description : data.description,
     };
-    BasicAxios.post("admin/establishments/update", payload);
+    BasicAxios.post("admin/establishments/update", payload)
+      .then((res) => {
+        setSuccessMessage(res.data.message);
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 3000);
+      })
+      .catch((err) => {
+        setErrorMessage(err.response.data.errors);
+      });
   }
 
   function checkCountry(value) {
@@ -205,14 +220,31 @@ export default function EstablishmentEdit(props) {
           </div>
         </div>
       </div>
+      {errorMessage &&
+        Object.keys(errorMessage).map((key) => {
+          return (
+            <p
+              key={key}
+              className="text-[16px] font-[600] mt-[1rem] text-red-600"
+            >
+              {errorMessage[key]}
+            </p>
+          );
+        })}
+
+      {successMessage && (
+        <p className="text-[16px] font-[600] mt-[1rem] text-green-600">
+          {successMessage}
+        </p>
+      )}
 
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button
+        {/* <button
           type="button"
           className="text-sm font-semibold leading-6 text-gray-900"
         >
           Cancel
-        </button>
+        </button> */}
         <button
           type="submit"
           className="inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

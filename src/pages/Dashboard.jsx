@@ -15,6 +15,7 @@
 import { Fragment, useState } from "react";
 import { Outlet, useLocation, Link } from "react-router-dom";
 import { Dialog, Menu, Transition } from "@headlessui/react";
+import Logo from '../assets/Logo'
 import {
   Bars3Icon,
   BellIcon,
@@ -145,11 +146,7 @@ export default function MainLayout() {
                   {/* Sidebar component, swap this element with another sidebar if you like */}
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4 ring-1 ring-white/10">
                     <div className="flex h-16 shrink-0 items-center">
-                      <img
-                        className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                        alt="Your Company"
-                      />
+                    <Logo></Logo>
                     </div>
                     <nav className="flex flex-1 flex-col">
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -227,11 +224,7 @@ export default function MainLayout() {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company"
-              />
+              <Logo></Logo>
             </div>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -318,7 +311,18 @@ export default function MainLayout() {
             />
 
             <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-              <form className="relative flex flex-1" action="#" method="GET">
+              <form
+                style={
+                  pathname == "/dashboard/establishments" ||
+                  pathname == "/dashboard/jobs" ||
+                  pathname == "/dashboard/users"
+                    ? undefined
+                    : { opacity: "0", pointerEvents: "none" }
+                }
+                className="relative flex flex-1"
+                action="#"
+                method="GET"
+              >
                 <label htmlFor="search-field" className="sr-only">
                   Search
                 </label>
@@ -334,14 +338,15 @@ export default function MainLayout() {
                   name="search"
                 />
               </form>
+
               <div className="flex items-center gap-x-4 lg:gap-x-6">
-                <button
+                {/* <button
                   type="button"
                   className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
                 >
                   <span className="sr-only">View notifications</span>
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
+                </button> */}
 
                 {/* Separator */}
                 <div
