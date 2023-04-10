@@ -5,6 +5,7 @@ const initialState = {
   jobs: [],
   establishments: [],
   users: [],
+  loggedUser: {}
 };
 
 const globalSlice = createSlice({
@@ -19,6 +20,9 @@ const globalSlice = createSlice({
     },
     setUsers(state, action) {
       state.users = action.payload;
+    },
+    setLoggedUser(state, action) {
+      state.loggedUser = action.payload;
     },
   },
 });

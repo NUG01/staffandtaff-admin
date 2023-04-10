@@ -19,3 +19,10 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+#root:empty{
+  height: 100vh;
+  width: 100vw;
+  background: url('/load-spinner.gif') center center no-repeat;
+  background-size: 50px;
+}

@@ -1,10 +1,17 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import BasicAxios from "../helpers/axios/index";
 import csrfAxios from "../helpers/axios/axios";
+import { globalActions } from "../store/index";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
+
+  const dispatch = useDispatch();
+  
+  const navigate = useNavigate();
 
   function submitHandler(ev) {
     ev.preventDefault();
@@ -13,8 +20,11 @@ export default function Login() {
       email: emailRef.current.value,
       password: passwordRef.current.value,
     }).then((res) => {
-      const user = BasicAxios.get("admin-user");
-      console.log(user);
+      const user = BasicAxios.get("admin-user")
+      .then(res => {
+        dispatch(globalActions.setLoggedUser(res.data.user));
+        navigate("/dashboard");
+      });
     });
     console.log(emailRef.current.value, passwordRef.current.value);
   }

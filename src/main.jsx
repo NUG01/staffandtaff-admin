@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, useNavigate } from "react-router-dom";
 
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -19,6 +19,9 @@ import JobEdit from "./pages/edit/Job";
 
 import { Provider } from "react-redux";
 import store from "./store/index.js";
+
+import BasicAxios from "./helpers/axios";
+
 
 const router = createBrowserRouter([
   {
@@ -43,10 +46,29 @@ const router = createBrowserRouter([
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  </React.StrictMode>
-);
+let user = {}
+
+BasicAxios.get("admin-user")
+.then(res => {
+  user = res.data.user
+  if(user){
+    ReactDOM.createRoot(document.getElementById("root")).render(
+      <React.StrictMode>
+        <Provider store={store}>
+          <RouterProvider router={router} user={user}/>
+        </Provider>
+      </React.StrictMode>
+    );
+  }
+})
+.catch(err => {
+  router.navigate('/')
+  
+  ReactDOM.createRoot(document.getElementById("root")).render(
+    <React.StrictMode>
+      <Provider store={store}>
+        <RouterProvider router={router}/>
+      </Provider>
+    </React.StrictMode>
+  );
+})
