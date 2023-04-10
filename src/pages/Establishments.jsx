@@ -14,23 +14,17 @@ function Establishment() {
 
   const dispatch = useDispatch();
 
-  // if (establishments!=[]) setData(establishments);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const res = await BasicAxios.get("admin/establishments");
-  //     dispatch(globalActions.setEstablishments(res.data.data));
-  //     setData(res?.data?.data);
-  //   })();
-  // }, [establishments]);
-
   useEffect(() => {
-    // fetchJobs();
+    
+    if(establishments.length == 0){
+      BasicAxios.get("admin/establishments").then((res) => {
+        dispatch(globalActions.setEstablishments(res.data.data));
+        setData(res?.data?.data);
+      });
+    }else{
+      setData(establishments)
+    }
 
-    BasicAxios.get("admin/establishments").then((res) => {
-      dispatch(globalActions.setEstablishments(res.data.data));
-      setData(res?.data?.data);
-    });
   }, []);
 
   return (

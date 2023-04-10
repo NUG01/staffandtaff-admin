@@ -12,19 +12,18 @@ function Jobs() {
   let users = useSelector((state) => state.users);
 
   const dispatch = useDispatch();
-  // const fetchJobs = useCallback(async () => {
-  //   const res = await BasicAxios.get("admin/jobs");
-  //   dispatch(globalActions.setJobs(res.data.data));
-  //   setData(res?.data?.data);
-  // }, []);
 
   useEffect(() => {
-    // fetchJobs();
 
-    BasicAxios.get("admin/users").then((res) => {
-      dispatch(globalActions.setUsers(res.data.data));
-      setData(res?.data?.data);
-    });
+    if(users.length === 0){
+      BasicAxios.get("admin/users").then((res) => {
+        dispatch(globalActions.setUsers(res.data.data));
+        setData(res?.data?.data);
+      });
+    }else{
+      setData(users)
+    }
+
   }, []);
 
   return (
