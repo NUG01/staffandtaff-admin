@@ -16,6 +16,8 @@ import Establishment from "./pages/details/Establishment";
 import UserEdit from "./pages/edit/User";
 import EstablishmentEdit from "./pages/edit/Establishment";
 import JobEdit from "./pages/edit/Job";
+import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
 
 import { Provider } from "react-redux";
 import store from "./store/index.js";
@@ -27,12 +29,15 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
+    errorElement: <NotFound />,
   },
   {
     path: "dashboard",
     element: <Dashboard />,
+    errorElement: <NotFound />,
     children: [
       { index: true, element: <Home /> },
+      { path: "profile", element: <Profile /> },
       { path: "jobs", element: <Jobs /> },
       { path: "establishments", element: <Establishments /> },
       { path: "users", element: <Users /> },

@@ -12,20 +12,19 @@ export default function Login() {
   const passwordRef = useRef();
 
   const dispatch = useDispatch();
-  
+
   const navigate = useNavigate();
 
   function submitHandler(ev) {
     ev.preventDefault();
-    Load()
+    Load();
     csrfAxios.get("/sanctum/csrf-cookie");
     BasicAxios.post("admin-login", {
       email: emailRef.current.value,
       password: passwordRef.current.value,
     }).then((res) => {
-      const user = BasicAxios.get("admin-user")
-      .then(res => {
-        UnLoad()
+      const user = BasicAxios.get("admin-user").then((res) => {
+        UnLoad();
         dispatch(globalActions.setLoggedUser(res.data.user));
         navigate("/dashboard");
       });
@@ -34,17 +33,6 @@ export default function Login() {
   }
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-50">
-        <body class="h-full">
-        ```
-      */}
-                                <Link
-                                  to={'/dashboard'}
-                                >dddddddddddd</Link>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <img
