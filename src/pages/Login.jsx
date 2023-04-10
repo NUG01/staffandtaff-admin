@@ -1,4 +1,23 @@
+import { useRef } from "react";
+import BasicAxios from "../helpers/axios/index";
+import csrfAxios from "../helpers/axios/axios";
+
 export default function Login() {
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  function submitHandler(ev) {
+    ev.preventDefault();
+    csrfAxios.get("/sanctum/csrf-cookie");
+    BasicAxios.post("admin-login", {
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    }).then((res) => {
+      const user = BasicAxios.get("admin-user");
+      console.log(user);
+    });
+    console.log(emailRef.current.value, passwordRef.current.value);
+  }
   return (
     <>
       {/*
@@ -23,7 +42,7 @@ export default function Login() {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6" action="#" method="POST">
+            <form onSubmit={submitHandler} className="space-y-6">
               <div>
                 <label
                   htmlFor="email"
@@ -33,12 +52,13 @@ export default function Login() {
                 </label>
                 <div className="mt-2">
                   <input
+                    ref={emailRef}
                     id="email"
                     name="email"
                     type="email"
                     autoComplete="email"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="px-[0.6rem] block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -52,12 +72,13 @@ export default function Login() {
                 </label>
                 <div className="mt-2">
                   <input
+                    ref={passwordRef}
                     id="password"
                     name="password"
                     type="password"
                     autoComplete="current-password"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="px-[0.6rem] block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>

@@ -33,7 +33,7 @@ export default function MainDetails(props) {
                 </dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                   {props.type == "user" && data[key]}
-                  {props.type == "job" && data[key]}
+                  {props.type == "job" && key != "location" && data[key]}
                   {props.type == "establishment" &&
                     key != "industry" &&
                     data[key]}

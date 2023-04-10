@@ -11,6 +11,7 @@ function User() {
   useEffect(() => {
     BasicAxios.get("admin/job/" + params.id).then((res) => {
       setData(res?.data);
+      console.log(res.data);
     });
   }, []);
   return (
