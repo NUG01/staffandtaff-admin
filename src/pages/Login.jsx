@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import BasicAxios from "../helpers/axios/index";
 import csrfAxios from "../helpers/axios/axios";
 import { globalActions } from "../store/index";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Load, UnLoad } from "../hooks/LoaderHandle";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const emailRef = useRef();
@@ -15,6 +17,7 @@ export default function Login() {
 
   function submitHandler(ev) {
     ev.preventDefault();
+    Load()
     csrfAxios.get("/sanctum/csrf-cookie");
     BasicAxios.post("admin-login", {
       email: emailRef.current.value,
@@ -22,6 +25,7 @@ export default function Login() {
     }).then((res) => {
       const user = BasicAxios.get("admin-user")
       .then(res => {
+        UnLoad()
         dispatch(globalActions.setLoggedUser(res.data.user));
         navigate("/dashboard");
       });
@@ -38,6 +42,9 @@ export default function Login() {
         <body class="h-full">
         ```
       */}
+                                <Link
+                                  to={'/dashboard'}
+                                >dddddddddddd</Link>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <img

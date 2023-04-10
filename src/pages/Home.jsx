@@ -1,6 +1,7 @@
 import MainTable from "../components/MainTable";
 import BasicAxios from "../helpers/axios/index";
 import MainStats from "../components/MainStats";
+import { Load, UnLoad } from "../hooks/LoaderHandle";
 
 import { useEffect, useState } from "react";
 
@@ -8,8 +9,10 @@ function Home() {
   const [stats, setStats] = useState([]);
 
   useEffect(() => {
+    Load()
     BasicAxios.get("admin/stats").then((res) => {
       setStats(res.data);
+      UnLoad()
     });
   }, []);
   return (
