@@ -1,10 +1,18 @@
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import EstablishmentInput from "./inputs/EstablishmentInput";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import BasicAxios from "../../helpers/axios";
 import { useParams } from "react-router-dom";
+import ImageEdit from "../ImageEdit";
 
 export default function EstablishmentEdit(props) {
+  const modal = useRef()
+  const imageInput = useRef()
+  const uploadIcon = useRef()
+  const submitIcon = useRef()
+  const previewImgHolder = useRef()
+  const imageToReplace = useRef()
+
   const data = props.data;
   const params = useParams();
   const [errorMessage, setErrorMessage] = useState([]);
@@ -83,6 +91,31 @@ export default function EstablishmentEdit(props) {
 
   function nameHandler(value) {
     setName(value);
+  }
+
+  function closeModal(){
+    modal.current.classList.add('hidden')
+    modal.current.classList.remove('flex')
+    submitIcon.current.classList.add('hidden')
+    submitIcon.current.classList.remove('flex')
+    imageInput.current.value = ''
+  }
+
+  function previewImage(files){
+    submitIcon.current.classList.remove('hidden'); 
+    submitIcon.current.classList.add('flex'); 
+
+    previewImgHolder.current.src = URL.createObjectURL(files[0])
+  }
+
+  function submitChange(value){
+    console.log(value.files);
+    modal.current.classList.add('hidden')
+    modal.current.classList.remove('flex')
+    submitIcon.current.classList.add('hidden')
+    submitIcon.current.classList.remove('flex')
+    imageInput.current.value = ''
+    imageToReplace.current.src = URL.createObjectURL(value)
   }
 
   return (
@@ -216,6 +249,18 @@ export default function EstablishmentEdit(props) {
                   }
                 />
               </div>
+              <div className="mt-2 flex flex-wrap justify-between">
+                  <ImageEdit modal={modal.current} src={"/default.png"} imageToReplace={imageToReplace}/>
+                  <ImageEdit modal={modal.current} src={"/default.png"} imageToReplace={imageToReplace}/>
+                  <ImageEdit modal={modal.current} src={"/default.png"} imageToReplace={imageToReplace}/>
+                  <ImageEdit modal={modal.current} src={"/default.png"} imageToReplace={imageToReplace}/>
+                  <ImageEdit modal={modal.current} src={"/default.png"} imageToReplace={imageToReplace}/>
+                  <ImageEdit modal={modal.current} src={"/default.png"} imageToReplace={imageToReplace}/>
+                  <ImageEdit modal={modal.current} src={"/default.png"} imageToReplace={imageToReplace}/>
+                  <ImageEdit modal={modal.current} src={"/default.png"} imageToReplace={imageToReplace}/>
+                  <ImageEdit modal={modal.current} src={"/default.png"} imageToReplace={imageToReplace}/>
+                  <ImageEdit modal={modal.current} src={"/default.png"} imageToReplace={imageToReplace}/>
+              </div>
             </div>
           </div>
         </div>
@@ -245,6 +290,27 @@ export default function EstablishmentEdit(props) {
         >
           Save
         </button>
+      </div>
+
+      <div className="imageEdit fixed w-[100vw] h-[100vh] z-[100] bg-[rgba(0,0,0,0.3)] backdrop-blur-sm hidden inset-0 pt-[50px] items-center justify-center" ref={modal}> 
+        <i className="fa-solid fa-xmark text-white absolute right-[40px] top-[20px] bg-black w-[30px] h-[30px] flex justify-center items-center rounded-full text-[13px] cursor-pointer" onClick={()=> closeModal()}></i>
+
+        <label htmlFor="image-edit-input" ref={uploadIcon}>
+          <i className="fa-solid fa-cloud-arrow-up text-white absolute right-[40px] top-[60px] bg-blue-900 w-[30px] h-[30px] flex justify-center items-center rounded-full text-[13px] cursor-pointer"></i>
+        </label>
+        
+        <i className="fa-solid fa-check text-white absolute right-[40px] top-[100px] bg-green-900 w-[30px] h-[30px] justify-center items-center rounded-full text-[13px] cursor-pointer hidden" ref={submitIcon} onClick={()=>submitChange(imageInput.current.files[0])}></i>
+
+        <input 
+          type="file" 
+          id="image-edit-input" 
+          accept="image/png, image/gif, image/jpeg" 
+          className="hidden" 
+          ref={imageInput}
+          onInput={(e)=> {previewImage(e.target.files)}}  
+        />
+
+        <img src="" alt="" className="object-contain max-w-[80%]" ref={previewImgHolder}/>
       </div>
     </form>
   );
