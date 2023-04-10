@@ -62,6 +62,7 @@ BasicAxios.get("admin-user")
 .catch(err => {
   
   router.navigate('/')
+  router.subscribe(() => router.navigate('/'));
   
   ReactDOM.createRoot(document.getElementById("root")).render(
     <Page router={router} user={user}/>
