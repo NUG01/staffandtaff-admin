@@ -1,21 +1,9 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
+import BasicAxios from "../helpers/axios/index.js";
+import { useNavigate } from "react-router-dom";
 import { Fragment, useState } from "react";
 import { Outlet, useLocation, Link } from "react-router-dom";
 import { Dialog, Menu, Transition } from "@headlessui/react";
-import Logo from '../assets/Logo'
+import Logo from "../assets/Logo";
 import {
   Bars3Icon,
   BellIcon,
@@ -35,9 +23,15 @@ import {
 
 export default function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const location = useLocation();
   const pathname = location.pathname;
+  function logoutHandler() {
+    BasicAxios.post("logout").then((res) => {
+      navigate("/");
+    });
+  }
 
   const navigation = [
     {
@@ -71,10 +65,7 @@ export default function MainLayout() {
   //   { id: 2, name: "Tailwind Labs", href: "#", initial: "T", current: false },
   //   { id: 3, name: "Workcation", href: "#", initial: "W", current: false },
   // ];
-  const userNavigation = [
-    { name: "Your profile", href: "#" },
-    { name: "Sign out", href: "#" },
-  ];
+  const userNavigation = [{ name: "Your profile", href: "/dashboard/profile" }];
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -146,7 +137,7 @@ export default function MainLayout() {
                   {/* Sidebar component, swap this element with another sidebar if you like */}
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4 ring-1 ring-white/10">
                     <div className="flex h-16 shrink-0 items-center">
-                    <Logo></Logo>
+                      <Logo></Logo>
                     </div>
                     <nav className="flex flex-1 flex-col">
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -386,21 +377,34 @@ export default function MainLayout() {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                      {userNavigation.map((item) => (
+                      {/* {userNavigation.map((item) => (
                         <Menu.Item key={item.name}>
                           {({ active }) => (
-                            <a
-                              href={item.href}
+                            <Link
+                              to={item.href}
                               className={classNames(
                                 active ? "bg-gray-50" : "",
                                 "block px-3 py-1 text-sm leading-6 text-gray-900"
                               )}
                             >
                               {item.name}
-                            </a>
+                            </Link>
                           )}
                         </Menu.Item>
-                      ))}
+                      ))} */}
+                      <Link
+                        to="/dashboard/profile"
+                        className="block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50"
+                      >
+                        Profile
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={logoutHandler}
+                        className="block text-start w-[100%] px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50"
+                      >
+                        Sign out
+                      </button>
                     </Menu.Items>
                   </Transition>
                 </Menu>
