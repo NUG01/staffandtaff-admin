@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import BasicAxios from "../helpers/axios";
 import { useState } from "react";
+import StripeAxios from "../helpers/axios/StripeCancel";
 
 export default function MainTable(props) {
   const { pathname } = useLocation();
@@ -14,7 +15,7 @@ export default function MainTable(props) {
     const myObj = props.data[0];
     keys = Object.keys(myObj);
     columnNames = keys.map((item) => {
-      if (item == "id") return;
+      if (item == "id" || item == "stripe_id") return;
       return (
         <th
           key={item}
@@ -44,6 +45,14 @@ export default function MainTable(props) {
     }
     if (props.type === "users") {
       BasicAxios.delete("admin/user/delete/" + id).then((res) => {
+        // setData(res.data);
+        // console.log(res);
+      });
+    }
+    if (props.type === "subscriptions") {
+      StripeAxios.delete(id).then((res) => {
+        // BasicAxios.delete("admin/payment/delete/" + id).then((res) => {});
+        BasicAxios.post("cancel-subscription", res.data).then((res) => {});
         // setData(res.data);
         // console.log(res);
       });
@@ -81,7 +90,7 @@ export default function MainTable(props) {
                     className={personIdx % 2 === 0 ? undefined : "bg-gray-50"}
                   >
                     {keys.map((key) => {
-                      if (key == "id") return;
+                      if (key == "id" || key == "stripe_id") return;
                       return (
                         <td
                           key={key}
@@ -114,7 +123,15 @@ export default function MainTable(props) {
                         href="#"
                         className="text-red-600 hover:text-indigo-900"
                       >
-                        <span onClick={() => deleteHandler(item.id)}>
+                        <span
+                          onClick={() =>
+                            deleteHandler(
+                              props.type != "subscriptions"
+                                ? item.id
+                                : item.stripe_id
+                            )
+                          }
+                        >
                           Delete
                         </span>
                         <span className="sr-only">, {item.id}</span>

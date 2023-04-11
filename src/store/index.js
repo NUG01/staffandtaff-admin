@@ -2,16 +2,20 @@ import { createStore } from "redux";
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 const initialState = {
+  subscriptions: [],
   jobs: [],
   establishments: [],
   users: [],
-  loggedUser: {}
+  loggedUser: null
 };
 
 const globalSlice = createSlice({
   name: "global",
   initialState: initialState,
   reducers: {
+    setSubscriptions(state, action) {
+      state.jobs = action.payload;
+    },
     setJobs(state, action) {
       state.jobs = action.payload;
     },

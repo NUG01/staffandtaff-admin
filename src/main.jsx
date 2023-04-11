@@ -2,7 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
-import { createBrowserRouter, RouterProvider, useNavigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useNavigate,
+} from "react-router-dom";
 
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -18,6 +22,8 @@ import EstablishmentEdit from "./pages/edit/Establishment";
 import JobEdit from "./pages/edit/Job";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import Payments from "./pages/Payments";
+import Payment from "./pages/details/Payment";
 
 import { Provider } from "react-redux";
 import store from "./store/index.js";
@@ -47,30 +53,28 @@ const router = createBrowserRouter([
       { path: "user/edit/:id", element: <UserEdit /> },
       { path: "job/edit/:id", element: <JobEdit /> },
       { path: "establishment/edit/:id", element: <EstablishmentEdit /> },
+      { path: "payments", element: <Payments /> },
+      { path: "payment/:id", element: <Payment /> },
     ],
   },
 ]);
 
-let user = {}
+let user = {};
 BasicAxios.get("admin-user")
-.then(res => {
-  
-  user = res.data.user
-  
-  if(user){
+  .then((res) => {
+    user = res.data.user;
+
+    if (user) {
+      ReactDOM.createRoot(document.getElementById("root")).render(
+        <Page router={router} user={user} />
+      );
+    }
+  })
+  .catch((err) => {
+    router.navigate("/");
+    router.subscribe(() => router.navigate("/"));
+
     ReactDOM.createRoot(document.getElementById("root")).render(
-      <Page router={router} user={user}/>
-    )
-  }
-
-})
-.catch(err => {
-  
-  router.navigate('/')
-  router.subscribe(() => router.navigate('/'));
-  
-  ReactDOM.createRoot(document.getElementById("root")).render(
-    <Page router={router} user={user}/>
-  )
-
-})
+      <Page router={router} user={user} />
+    );
+  });
