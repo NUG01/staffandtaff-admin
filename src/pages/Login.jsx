@@ -17,17 +17,14 @@ export default function Login() {
 
   function submitHandler(ev) {
     ev.preventDefault();
-    // Load();
+    Load();
     csrfAxios.get("/sanctum/csrf-cookie");
     BasicAxios.post("admin-login", {
       email: emailRef.current.value,
       password: passwordRef.current.value,
     })
       .then((res) => {
-        // UnLoad();
-        dispatch(globalActions.setLoggedUser(res.data));
-        console.log(res.data);
-        navigate("/dashboard");
+        location.href = '/dashboard'
       })
       .catch((err) => {
         alert("Something went wrong");
