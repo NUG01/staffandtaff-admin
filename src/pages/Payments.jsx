@@ -19,7 +19,6 @@ function Payments() {
     if (subscriptions.length == 0) {
       Load();
       BasicAxios.get("subscriptions").then((res) => {
-        console.log(res);
         dispatch(globalActions.setSubscriptions(res.data.data));
         setData(res?.data?.data);
         UnLoad();

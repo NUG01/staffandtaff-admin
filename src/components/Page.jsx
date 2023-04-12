@@ -5,12 +5,10 @@ import { RouterProvider } from "react-router-dom";
 
 export default function Page({ router, user = false }) {
   return (
-    <Provider store={store}>
-      <RouterProvider router={router} user={user} />
-    </Provider>
+    <React.StrictMode>
+      <Provider store={store}>
+        <RouterProvider router={router} user={user} />
+      </Provider>
+    </React.StrictMode>
   );
-  {
-    // <React.StrictMode>
-    /* </React.StrictMode> */
-  }
 }

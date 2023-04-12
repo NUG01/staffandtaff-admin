@@ -51,6 +51,7 @@ export default function MainTable(props) {
     }
     if (props.type === "subscriptions") {
       StripeAxios.delete(id).then((res) => {
+        console.log(res.data);
         // BasicAxios.delete("admin/payment/delete/" + id).then((res) => {});
         BasicAxios.post("cancel-subscription", res.data).then((res) => {});
         // setData(res.data);
