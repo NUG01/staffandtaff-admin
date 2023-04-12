@@ -17,19 +17,21 @@ export default function Login() {
 
   function submitHandler(ev) {
     ev.preventDefault();
-    Load();
+    // Load();
     csrfAxios.get("/sanctum/csrf-cookie");
     BasicAxios.post("admin-login", {
       email: emailRef.current.value,
       password: passwordRef.current.value,
-    }).then((res) => {
-      const user = BasicAxios.get("admin-user").then((res) => {
-        UnLoad();
-        dispatch(globalActions.setLoggedUser(res.data.user));
+    })
+      .then((res) => {
+        // UnLoad();
+        dispatch(globalActions.setLoggedUser(res.data));
+        console.log(res.data);
         navigate("/dashboard");
+      })
+      .catch((err) => {
+        alert("Something went wrong");
       });
-    });
-    console.log(emailRef.current.value, passwordRef.current.value);
   }
   return (
     <>
