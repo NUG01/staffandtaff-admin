@@ -70,7 +70,7 @@ export default function JobEdit(props) {
       period: period ? period : data.period,
       availability: availability ? availability : data.availability,
       description: description ? description : data.description,
-      city: location ? location : data.location.city,
+      city: location ? location : { city: data.location.city },
       country_code: cityDetails?.country_code
         ? cityDetails?.country_code
         : props.data.location?.country_code,
@@ -171,7 +171,7 @@ export default function JobEdit(props) {
               name="position"
               label="Position"
               value={position == undefined ? props.data.position : position}
-              onClick={positionHandler}
+              onChange={positionHandler}
             ></JobInput>
 
             <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
