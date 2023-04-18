@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import BasicAxios from "../helpers/axios";
 import { useState } from "react";
-import StripeAxios from "../helpers/axios/StripeCancel";
 
 export default function MainTable(props) {
   const { pathname } = useLocation();
@@ -50,10 +49,6 @@ export default function MainTable(props) {
       });
     }
     if (props.type === "subscriptions") {
-      // console.log(id);
-      // return;
-      // StripeAxios.delete(id).then((res) => {
-      // BasicAxios.delete("admin/payment/delete/" + id).then((res) => {});
       BasicAxios.post("admin/cancel-subscription", {
         id: id,
       }).then((res) => {
@@ -115,15 +110,17 @@ export default function MainTable(props) {
                         <span className="sr-only">, {item.id}</span>
                       </Link>
                     </td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                      <Link
-                        to={pathname.slice(0, -1) + "/edit/" + item.id}
-                        className="text-indigo-500 hover:text-indigo-900"
-                      >
-                        Edit
-                        <span className="sr-only">, {item.id}</span>
-                      </Link>
-                    </td>
+                    {props.type !== "subscriptions" && (
+                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                        <Link
+                          to={pathname.slice(0, -1) + "/edit/" + item.id}
+                          className="text-indigo-500 hover:text-indigo-900"
+                        >
+                          Edit
+                          <span className="sr-only">, {item.id}</span>
+                        </Link>
+                      </td>
+                    )}
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                       <Link
                         href="#"
