@@ -2,6 +2,7 @@ import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import EstablishmentInput from "./inputs/EstablishmentInput";
 import { useState, useEffect, useRef } from "react";
 import BasicAxios from "../../helpers/axios";
+import MediaAxios from "../../helpers/axios/MediaAxios";
 import { useParams } from "react-router-dom";
 import ImageEdit from "../ImageEdit";
 
@@ -12,6 +13,7 @@ export default function EstablishmentEdit(props) {
   const submitIcon = useRef();
   const previewImgHolder = useRef();
   const imageToReplace = useRef();
+  const indexInput = useRef();
 
   const data = props.data;
   const params = useParams();
@@ -109,19 +111,20 @@ export default function EstablishmentEdit(props) {
   }
 
   function submitChange(value) {
-    modal.current.classList.add("hidden");
-    modal.current.classList.remove("flex");
-    submitIcon.current.classList.add("hidden");
-    submitIcon.current.classList.remove("flex");
-    imageInput.current.value = "";
-    imageToReplace.current.src = URL.createObjectURL(value);
     const form = new FormData();
-    form.append("id", "id");
-    form.append("image", value.files[0]);
+    form.append("image", value);
+    console.log(value);
+    console.log(form.get('image'));
 
-    BasicAxios.patch("/admin/establishments-gallery/update/" + "id", form).then(
+    MediaAxios.post(`/admin/establishments-gallery/update/${indexInput.current.value}`, form).then(
       (res) => {
-        console.log(res);
+        indexInput.current.value = ''
+        modal.current.classList.add("hidden");
+        modal.current.classList.remove("flex");
+        submitIcon.current.classList.add("hidden");
+        submitIcon.current.classList.remove("flex");
+        imageInput.current.value = "";
+        imageToReplace.current.src = URL.createObjectURL(value);
       }
     );
   }
@@ -259,63 +262,20 @@ export default function EstablishmentEdit(props) {
               </div>
               {data?.gallery && (
                 <div className="mt-2 flex flex-wrap justify-between">
-                  {data.gallery.map((item) => {
+                  {data.gallery.map((item, index) => {
                     return (
                       <ImageEdit
                         key={item.id}
                         modal={modal.current}
+                        index={item.id}
                         src={`http://localhost:8000/storage/${item.path}`}
                         imageToReplace={imageToReplace}
+                        indexInput={indexInput}
                       />
                     );
                   })}
                 </div>
               )}
-              {/* <ImageEdit
-                  modal={modal.current}
-                  src={"/default.png"}
-                  imageToReplace={imageToReplace}
-                />
-                <ImageEdit
-                  modal={modal.current}
-                  src={"/default.png"}
-                  imageToReplace={imageToReplace}
-                />
-                <ImageEdit
-                  modal={modal.current}
-                  src={"/default.png"}
-                  imageToReplace={imageToReplace}
-                />
-                <ImageEdit
-                  modal={modal.current}
-                  src={"/default.png"}
-                  imageToReplace={imageToReplace}
-                />
-                <ImageEdit
-                  modal={modal.current}
-                  src={"/default.png"}
-                  imageToReplace={imageToReplace}
-                />
-                <ImageEdit
-                  modal={modal.current}
-                  src={"/default.png"}
-                  imageToReplace={imageToReplace}
-                />
-                <ImageEdit
-                  modal={modal.current}
-                  src={"/default.png"}
-                  imageToReplace={imageToReplace}
-                />
-                <ImageEdit
-                  modal={modal.current}
-                  src={"/default.png"}
-                  imageToReplace={imageToReplace}
-                />
-                <ImageEdit
-                  modal={modal.current}
-                  src={"/default.png"}
-                  imageToReplace={imageToReplace}
-                /> */}
             </div>
           </div>
         </div>
@@ -375,6 +335,12 @@ export default function EstablishmentEdit(props) {
           onInput={(e) => {
             previewImage(e.target.files);
           }}
+        />
+
+        <input 
+          type="text"
+          className="hidden"
+          ref={indexInput}
         />
 
         <img
