@@ -31,7 +31,7 @@ export default function MainLayout() {
   function logoutHandler() {
     Load();
     BasicAxios.post("logout").then((res) => {
-      UnLoad()
+      UnLoad();
       navigate("/");
     });
   }
@@ -160,7 +160,7 @@ export default function MainLayout() {
                           </ul>
                         </li>
                         <li></li>
-                        <li className="mt-auto">
+                        {/* <li className="mt-auto">
                           <a
                             href="#"
                             className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
@@ -171,7 +171,7 @@ export default function MainLayout() {
                             />
                             Settings
                           </a>
-                        </li>
+                        </li> */}
                       </ul>
                     </nav>
                   </div>
@@ -214,7 +214,7 @@ export default function MainLayout() {
                   </ul>
                 </li>
                 <li></li>
-                <li className="mt-auto">
+                {/* <li className="mt-auto">
                   <a
                     href="#"
                     className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
@@ -225,7 +225,7 @@ export default function MainLayout() {
                     />
                     Settings
                   </a>
-                </li>
+                </li> */}
               </ul>
             </nav>
           </div>
