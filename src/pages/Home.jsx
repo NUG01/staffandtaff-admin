@@ -1,7 +1,7 @@
 import MainTable from "../components/MainTable";
 import BasicAxios from "../helpers/axios/index";
 import MainStats from "../components/MainStats";
-import { Load, UnLoad } from "../hooks/LoaderHandle";
+import { Load, RemoveLoader } from "../hooks/LoaderHandle";
 
 import { useEffect, useState } from "react";
 
@@ -12,7 +12,7 @@ function Home() {
     Load()
     BasicAxios.get("admin/stats").then((res) => {
       setStats(res.data);
-      UnLoad()
+      RemoveLoader()
     });
   }, []);
   return (

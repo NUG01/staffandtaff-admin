@@ -4,7 +4,7 @@ import { Fragment, useState } from "react";
 import { Outlet, useLocation, Link } from "react-router-dom";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import Logo from "../assets/Logo";
-import { Load, UnLoad } from "../hooks/LoaderHandle";
+import { Load, RemoveLoader } from "../hooks/LoaderHandle";
 import {
   Bars3Icon,
   BellIcon,
@@ -31,7 +31,7 @@ export default function MainLayout() {
   function logoutHandler() {
     Load();
     BasicAxios.post("logout").then((res) => {
-      UnLoad()
+      RemoveLoader()
       navigate("/");
     });
   }

@@ -1,11 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import BasicAxios from "../helpers/axios";
 import { useState } from "react";
+import { Load, RemoveLoader } from "../hooks/LoaderHandle";
 
 export default function MainTable(props) {
   const { pathname } = useLocation();
-  let [data, setData] = useState(props.data);
-  // let data;
+  let data;
   let columnNames;
   let keys;
   let columns;
@@ -28,35 +28,43 @@ export default function MainTable(props) {
   } else {
     return <h2>No data</h2>;
   }
-
   function deleteHandler(id) {
+    Load()
     if (props.type === "jobs") {
+      console.log(id);
+      console.log(data);
       BasicAxios.delete("admin/jobs/delete/" + id).then((res) => {
-        // console.log(res);
+        props.setData(data => data.filter(item => item.id != id))
+        RemoveLoader()
         // setData(res.data);
-      });
+        // console.log(res);
+      }).catch(err => RemoveLoader());
     }
     if (props.type === "establishments") {
       BasicAxios.delete("admin/establishments/delete/" + id).then((res) => {
+        props.setData(data => data.filter(item => item.id != id))
+        RemoveLoader()
         // setData(res.data);
         // console.log(res);
-      });
+      }).catch(err => RemoveLoader());
     }
     if (props.type === "users") {
       BasicAxios.delete("admin/user/delete/" + id).then((res) => {
+        props.setData(data => data.filter(item => item.id != id))
+        RemoveLoader()
         // setData(res.data);
         // console.log(res);
-      });
+      }).catch(err => RemoveLoader());
     }
     if (props.type === "subscriptions") {
       BasicAxios.post("admin/cancel-subscription", {
         id: id,
       }).then((res) => {
-        console.log(res);
-      });
-      // setData(res.data);
-      // console.log(res);
-      // });
+        props.setData(data => data.filter(item => item.id != id))
+        RemoveLoader()
+        // setData(res.data);
+        // console.log(res);
+      }).catch(err => RemoveLoader());
     }
   }
 

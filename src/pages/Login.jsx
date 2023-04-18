@@ -4,7 +4,7 @@ import BasicAxios from "../helpers/axios/index";
 import csrfAxios from "../helpers/axios/axios";
 import { globalActions } from "../store/index";
 import { useDispatch } from "react-redux";
-import { Load, UnLoad } from "../hooks/LoaderHandle";
+import { Load, RemoveLoader } from "../hooks/LoaderHandle";
 import { Link } from "react-router-dom";
 
 export default function Login() {

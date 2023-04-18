@@ -4,7 +4,7 @@ import MainTable from "../components/MainTable";
 import BasicAxios from "../helpers/axios/index";
 import { globalActions } from "../store/index";
 import { useSelector, useDispatch } from "react-redux";
-import { Load, UnLoad } from "../hooks/LoaderHandle";
+import { Load, RemoveLoader } from "../hooks/LoaderHandle";
 
 import { useEffect, useState, useCallback } from "react";
 
@@ -21,7 +21,7 @@ function Jobs() {
       BasicAxios.get("admin/users").then((res) => {
         dispatch(globalActions.setUsers(res.data.data));
         setData(res?.data?.data);
-        UnLoad()
+        RemoveLoader()
       });
     }else{
       setData(users)
@@ -32,7 +32,7 @@ function Jobs() {
   return (
     <>
       {!data && <h2 style={{ color: "black" }}>hello</h2>}
-      {data && <MainTable data={data} type="users"></MainTable>}
+      {data && <MainTable data={data} type='users' setData={setData}></MainTable>}
     </>
   );
 }

@@ -3,9 +3,9 @@ function Load(){
     document.querySelector('body').style.pointerEvents = 'none'
 }
 
-function UnLoad(){
+function RemoveLoader(){
     document.querySelector('body').style.opacity = '1'
     document.querySelector('body').style.pointerEvents = 'unset'
 }
 
-export {Load, UnLoad}
+export {Load, RemoveLoader}
