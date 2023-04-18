@@ -70,7 +70,7 @@ export default function JobEdit(props) {
       period: period ? period : data.period,
       availability: availability ? availability : data.availability,
       description: description ? description : data.description,
-      city: location ? location : data.location.city,
+      city: location ? location : { city: data.location.city },
       country_code: cityDetails?.country_code
         ? cityDetails?.country_code
         : props.data.location?.country_code,
