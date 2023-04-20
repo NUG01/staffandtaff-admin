@@ -2,9 +2,12 @@ import { React, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import FaqInput from '../../components/Forms/inputs/FaqInput';
+import BasicAxios from "../../helpers/axios";
 
 function FaqAdd() {
 
+  const [errorMessage, setErrorMessage] = useState([]);
+  const [successMessage, setSuccessMessage] = useState("");
   const category = useRef()
   const heading = useRef()
   const [content, setContent] = useState('');
@@ -21,11 +24,26 @@ function FaqAdd() {
   const modules = {
     toolbar: options
   }
-
+  
   function addFAQ(){
-    console.log(category.current.value);
-    console.log(heading.current.value);
-    console.log(content);
+    setErrorMessage("");
+
+    const payload = {
+      category: category.current.value,
+      question: heading.current.value,
+      answer: content
+    }
+
+    
+    BasicAxios.post("admin/faq/create", payload)
+      .then((res) => {
+        setSuccessMessage(res.data.message);
+        setTimeout(() => {
+        }, 3000);
+      })
+      .catch((err) => {
+        setErrorMessage(err.response.data.errors);
+      });
   }
 
   return (
@@ -34,16 +52,34 @@ function FaqAdd() {
       <FaqInput
           name="category"
           label="Category"
-          ref={category}
+          inpRef={category}
       />
 
       <FaqInput
           name="heading"
           label="Heading"
-          ref={heading}
+          inpRef={heading}
       />
 
       <ReactQuill modules={modules} theme="snow" value={content} onChange={setContent} className='text-black'/>
+
+      {errorMessage &&
+        Object.keys(errorMessage).map((key) => {
+          return (
+            <p
+              key={key}
+              className="text-[16px] font-[600] mt-[1rem] text-red-600"
+            >
+              {errorMessage[key]}
+            </p>
+          );
+        })}
+
+      {successMessage && (
+        <p className="text-[16px] font-[600] mt-[1rem] text-green-600">
+          {successMessage}
+        </p>
+      )}
 
       <button
           onClick={()=> addFAQ()}
