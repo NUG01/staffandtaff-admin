@@ -26,3 +26,7 @@
   background: url('/load-spinner.gif') center center no-repeat;
   background-size: 50px;
 }
+
+.ql-editor{
+  min-height: 150px;
+}

@@ -141,6 +141,7 @@ export default function MainTable(props) {
                         <Link
                           to={pathname.slice(0, -1) + "/edit/" + item.id}
                           className="text-indigo-500 hover:text-indigo-900"
+                          params={{ data: item }}
                         >
                           Edit
                           <span className="sr-only">, {item.id}</span>
