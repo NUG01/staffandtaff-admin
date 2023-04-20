@@ -39,10 +39,12 @@ function FaqEdit(props) {
     });
   }, []);
 
+
   const options = [
     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
     ['bold', 'italic', 'underline'],
     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    [{ 'indent': '-1'}, { 'indent': '+1' }],
     [{ 'color': [] },],
     [{ 'align': [] }],
     ['clean']
@@ -60,7 +62,7 @@ function FaqEdit(props) {
       question: question.current.value,
       answer
     }
-
+    
     Load()
     BasicAxios.post("admin/faq/edit/" + params.id, payload)
       .then((res) => {
