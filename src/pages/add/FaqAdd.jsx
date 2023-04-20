@@ -3,14 +3,16 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import FaqInput from '../../components/Forms/inputs/FaqInput';
 import BasicAxios from "../../helpers/axios";
+import { Load, RemoveLoader } from "../../hooks/LoaderHandle";
 
 function FaqAdd() {
 
   const [errorMessage, setErrorMessage] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
+  
   const category = useRef()
-  const heading = useRef()
-  const [content, setContent] = useState('');
+  const question = useRef()
+  const [answer, setAnswer] = useState('');
 
   const options = [
     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -30,18 +32,18 @@ function FaqAdd() {
 
     const payload = {
       category: category.current.value,
-      question: heading.current.value,
-      answer: content
+      question: question.current.value,
+      answer
     }
 
     
+    Load()
     BasicAxios.post("admin/faq/create", payload)
       .then((res) => {
-        setSuccessMessage(res.data.message);
-        setTimeout(() => {
-        }, 3000);
+        location.href = '/dashboard/faqs'
       })
       .catch((err) => {
+        RemoveLoader()
         setErrorMessage(err.response.data.errors);
       });
   }
@@ -56,12 +58,12 @@ function FaqAdd() {
       />
 
       <FaqInput
-          name="heading"
-          label="Heading"
-          inpRef={heading}
+          name="question"
+          label="Question"
+          inpRef={question}
       />
 
-      <ReactQuill modules={modules} theme="snow" value={content} onChange={setContent} className='text-black'/>
+      <ReactQuill modules={modules} theme="snow" onChange={setAnswer} className='text-black'/>
 
       {errorMessage &&
         Object.keys(errorMessage).map((key) => {
