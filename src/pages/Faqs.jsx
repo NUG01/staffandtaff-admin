@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import MainTable from "../components/MainTable";
 import BasicAxios from "../helpers/axios/index.js";
 
-function Faq() {
+function Faqs() {
   const [data, setData] = useState([]);
   useEffect(() => {
     BasicAxios.get("admin/faqs").then((res) => {
@@ -24,4 +24,4 @@ function Faq() {
   );
 }
 
-export default Faq;
+export default Faqs;

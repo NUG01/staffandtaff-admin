@@ -62,6 +62,16 @@ export default function MainTable(props) {
         })
         .catch((err) => RemoveLoader());
     }
+    if (props.type === "faqs") {
+      BasicAxios.delete("admin/faq/delete/" + id)
+        .then((res) => {
+          props.setData((data) => data.filter((item) => item.id != id));
+          RemoveLoader();
+          // setData(res.data);
+          // console.log(res);
+        })
+        .catch((err) => RemoveLoader());
+    }
     if (props.type === "subscriptions") {
       BasicAxios.post("admin/cancel-subscription", {
         id: id,
@@ -93,7 +103,7 @@ export default function MainTable(props) {
               to={"add"}
               className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Add user
+              Add {props.type.charAt(0) + props.type.slice(1, -1)}
             </Link>
           </div>
         )}
