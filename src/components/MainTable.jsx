@@ -28,59 +28,25 @@ export default function MainTable(props) {
   } else {
     return <h2>No data</h2>;
   }
+
   function deleteHandler(id) {
     Load();
-    if (props.type === "jobs") {
-      console.log(id);
-      console.log(data);
-      BasicAxios.delete("admin/jobs/delete/" + id)
+    if (props.type !== "subscriptions") {
+      BasicAxios.delete(
+        `admin/${props.type.charAt(0) + props.type.slice(1, -1)}/delete/${id}`
+      )
         .then((res) => {
           props.setData((data) => data.filter((item) => item.id != id));
           RemoveLoader();
-          // setData(res.data);
-          // console.log(res);
         })
         .catch((err) => RemoveLoader());
-    }
-    if (props.type === "establishments") {
-      BasicAxios.delete("admin/establishments/delete/" + id)
-        .then((res) => {
-          props.setData((data) => data.filter((item) => item.id != id));
-          RemoveLoader();
-          // setData(res.data);
-          // console.log(res);
-        })
-        .catch((err) => RemoveLoader());
-    }
-    if (props.type === "users") {
-      BasicAxios.delete("admin/user/delete/" + id)
-        .then((res) => {
-          props.setData((data) => data.filter((item) => item.id != id));
-          RemoveLoader();
-          // setData(res.data);
-          // console.log(res);
-        })
-        .catch((err) => RemoveLoader());
-    }
-    if (props.type === "faqs") {
-      BasicAxios.delete("admin/faq/delete/" + id)
-        .then((res) => {
-          props.setData((data) => data.filter((item) => item.id != id));
-          RemoveLoader();
-          // setData(res.data);
-          // console.log(res);
-        })
-        .catch((err) => RemoveLoader());
-    }
-    if (props.type === "subscriptions") {
+    } else {
       BasicAxios.post("admin/cancel-subscription", {
         id: id,
       })
         .then((res) => {
           props.setData((data) => data.filter((item) => item.id != id));
           RemoveLoader();
-          // setData(res.data);
-          // console.log(res);
         })
         .catch((err) => RemoveLoader());
     }
