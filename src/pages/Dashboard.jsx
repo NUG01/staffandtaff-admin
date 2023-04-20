@@ -62,7 +62,7 @@ export default function MainLayout() {
       current: pathname == "/dashboard/users" ? true : false,
     },
     {
-      name: "Faq",
+      name: "Faqs",
       href: "/dashboard/faqs",
       icon: FolderIcon,
       current: pathname == "/dashboard/faqs" ? true : false,

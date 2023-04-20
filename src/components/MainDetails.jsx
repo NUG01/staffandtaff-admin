@@ -44,6 +44,7 @@ export default function MainDetails(props) {
                 <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                   {props.type == "user" && data[key]}
                   {props.type == "payment" && data[key]}
+                  {props.type == "faq" && data[key]}
                   {props.type == "job" && key != "location" && data[key]}
                   {props.type == "establishment" &&
                     key != "industry" &&
@@ -87,7 +88,7 @@ export default function MainDetails(props) {
               reprehenderit deserunt qui eu.
             </dd>
           </div> */}
-          {props.state != "profile" && (
+          {/* {props.state != "profile" && (
             <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Attachments</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
@@ -136,7 +137,7 @@ export default function MainDetails(props) {
                 </ul>
               </dd>
             </div>
-          )}
+          )} */}
         </dl>
       </div>
     </div>
