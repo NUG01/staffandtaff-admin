@@ -63,9 +63,9 @@ export default function MainLayout() {
     },
     {
       name: "Faq",
-      href: "/dashboard/faq",
+      href: "/dashboard/faqs",
       icon: FolderIcon,
-      current: pathname == "/dashboard/faq" ? true : false,
+      current: pathname == "/dashboard/faqs" ? true : false,
     },
     {
       name: "Payment Reports",
