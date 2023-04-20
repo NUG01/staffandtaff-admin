@@ -31,7 +31,7 @@ export default function MainLayout() {
   function logoutHandler() {
     Load();
     BasicAxios.post("logout").then((res) => {
-      RemoveLoader()
+      RemoveLoader();
       navigate("/");
     });
   }
@@ -60,6 +60,12 @@ export default function MainLayout() {
       href: "/dashboard/users",
       icon: UsersIcon,
       current: pathname == "/dashboard/users" ? true : false,
+    },
+    {
+      name: "Faq",
+      href: "/dashboard/faq",
+      icon: FolderIcon,
+      current: pathname == "/dashboard/faq" ? true : false,
     },
     {
       name: "Payment Reports",
@@ -254,7 +260,8 @@ export default function MainLayout() {
                   pathname == "/dashboard/establishments" ||
                   pathname == "/dashboard/jobs" ||
                   pathname == "/dashboard/users" ||
-                  pathname == "/dashboard/payments"
+                  pathname == "/dashboard/payments" ||
+                  pathname == "/dashboard/faq"
                     ? undefined
                     : { opacity: "0", pointerEvents: "none" }
                 }

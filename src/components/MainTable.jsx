@@ -29,42 +29,50 @@ export default function MainTable(props) {
     return <h2>No data</h2>;
   }
   function deleteHandler(id) {
-    Load()
+    Load();
     if (props.type === "jobs") {
       console.log(id);
       console.log(data);
-      BasicAxios.delete("admin/jobs/delete/" + id).then((res) => {
-        props.setData(data => data.filter(item => item.id != id))
-        RemoveLoader()
-        // setData(res.data);
-        // console.log(res);
-      }).catch(err => RemoveLoader());
+      BasicAxios.delete("admin/jobs/delete/" + id)
+        .then((res) => {
+          props.setData((data) => data.filter((item) => item.id != id));
+          RemoveLoader();
+          // setData(res.data);
+          // console.log(res);
+        })
+        .catch((err) => RemoveLoader());
     }
     if (props.type === "establishments") {
-      BasicAxios.delete("admin/establishments/delete/" + id).then((res) => {
-        props.setData(data => data.filter(item => item.id != id))
-        RemoveLoader()
-        // setData(res.data);
-        // console.log(res);
-      }).catch(err => RemoveLoader());
+      BasicAxios.delete("admin/establishments/delete/" + id)
+        .then((res) => {
+          props.setData((data) => data.filter((item) => item.id != id));
+          RemoveLoader();
+          // setData(res.data);
+          // console.log(res);
+        })
+        .catch((err) => RemoveLoader());
     }
     if (props.type === "users") {
-      BasicAxios.delete("admin/user/delete/" + id).then((res) => {
-        props.setData(data => data.filter(item => item.id != id))
-        RemoveLoader()
-        // setData(res.data);
-        // console.log(res);
-      }).catch(err => RemoveLoader());
+      BasicAxios.delete("admin/user/delete/" + id)
+        .then((res) => {
+          props.setData((data) => data.filter((item) => item.id != id));
+          RemoveLoader();
+          // setData(res.data);
+          // console.log(res);
+        })
+        .catch((err) => RemoveLoader());
     }
     if (props.type === "subscriptions") {
       BasicAxios.post("admin/cancel-subscription", {
         id: id,
-      }).then((res) => {
-        props.setData(data => data.filter(item => item.id != id))
-        RemoveLoader()
-        // setData(res.data);
-        // console.log(res);
-      }).catch(err => RemoveLoader());
+      })
+        .then((res) => {
+          props.setData((data) => data.filter((item) => item.id != id));
+          RemoveLoader();
+          // setData(res.data);
+          // console.log(res);
+        })
+        .catch((err) => RemoveLoader());
     }
   }
 
@@ -79,6 +87,16 @@ export default function MainTable(props) {
             A list of all the {props.type} in your account.
           </p>
         </div>
+        {props.addable && (
+          <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+            <Link
+              to={"add"}
+              className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              Add user
+            </Link>
+          </div>
+        )}
       </div>
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

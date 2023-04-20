@@ -24,6 +24,8 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import Payments from "./pages/Payments";
 import Payment from "./pages/details/Payment";
+import Faq from "./pages/Faq";
+import FaqAdd from "./pages/add/FaqAdd";
 
 import { Provider } from "react-redux";
 import store from "./store/index.js";
@@ -55,6 +57,8 @@ const router = createBrowserRouter([
       { path: "establishment/edit/:id", element: <EstablishmentEdit /> },
       { path: "payments", element: <Payments /> },
       { path: "payment/:id", element: <Payment /> },
+      { path: "faqs", element: <Faq /> },
+      { path: "faqs/add", element: <FaqAdd /> },
     ],
   },
 ]);
