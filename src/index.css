@@ -30,3 +30,7 @@
 .ql-editor{
   min-height: 150px;
 }
+
+.terms-editor .ql-editor{
+  min-height: 500px;
+}

@@ -73,6 +73,12 @@ export default function MainLayout() {
       icon: ChartPieIcon,
       current: pathname == "/dashboard/payments" ? true : false,
     },
+    {
+      name: "Terms & Conditions",
+      href: "/dashboard/terms",
+      icon: ChartPieIcon,
+      current: pathname == "/dashboard/terms" ? true : false,
+    },
   ];
   const userNavigation = [{ name: "Your profile", href: "/dashboard/profile" }];
 

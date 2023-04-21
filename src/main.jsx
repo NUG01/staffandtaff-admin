@@ -28,6 +28,7 @@ import Faqs from "./pages/Faqs";
 import FaqAdd from "./pages/add/FaqAdd";
 import Faq from "./pages/details/Faq";
 import FaqEdit from "./components/Forms/FaqEdit";
+import Terms from "./pages/Terms";
 
 import { Provider } from "react-redux";
 import store from "./store/index.js";
@@ -63,6 +64,7 @@ const router = createBrowserRouter([
       { path: "faqs/add", element: <FaqAdd /> },
       { path: "faq/:id", element: <Faq /> },
       { path: "faq/edit/:id", element: <FaqEdit /> },
+      { path: "terms", element: <Terms /> },
     ],
   },
 ]);
