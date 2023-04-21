@@ -1,16 +1,40 @@
 import { Link, useLocation } from "react-router-dom";
 import BasicAxios from "../helpers/axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Load, RemoveLoader } from "../hooks/LoaderHandle";
+import { useSelector } from "react-redux";
+
+function filterByValue(array, string) {
+ const result= array.filter(obj => {
+    const searchTermsArr = string.split(" ");
+    
+    let allKeys = Object.keys(obj)
+    let asArray=[];
+    allKeys.forEach(keyvalue => {
+      Object.keys(obj).map((key)=>{
+         return asArray.push(typeof (obj[key]) !== 'number' ? obj[key] : (obj[key]).toString())
+       })
+      }
+        );
+        return searchTermsArr.every(term =>  asArray.includes(term))
+  });
+  return result;
+}
 
 export default function MainTable(props) {
   const { pathname } = useLocation();
+  const searchItemValue=useSelector(state=>state.searchItem)
+
   let data;
   let columnNames;
   let keys;
   let columns;
   if (props.data[0]) {
     data = props.data;
+    if(searchItemValue && searchItemValue.pathname== pathname){
+
+    data= filterByValue(data, searchItemValue.term)
+    }
     const myObj = props.data[0];
     keys = Object.keys(myObj);
     columnNames = keys.map((item) => {

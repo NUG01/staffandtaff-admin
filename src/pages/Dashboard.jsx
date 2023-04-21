@@ -1,10 +1,12 @@
 import BasicAxios from "../helpers/axios/index.js";
 import { useNavigate } from "react-router-dom";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useRef, useEffect } from "react";
 import { Outlet, useLocation, Link } from "react-router-dom";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import Logo from "../assets/Logo";
 import { Load, RemoveLoader } from "../hooks/LoaderHandle";
+import { useDispatch } from "react-redux";
+import { globalActions } from "../store/index.js";
 import {
   Bars3Icon,
   BellIcon,
@@ -26,6 +28,8 @@ import {
 export default function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
+  const searchValue=useRef()
+  const dispatch=useDispatch()
 
   const location = useLocation();
   const pathname = location.pathname;
@@ -35,6 +39,20 @@ export default function MainLayout() {
       RemoveLoader();
       navigate("/");
     });
+  }
+
+  useEffect(()=>{
+    dispatch(globalActions.setSearchItem(null))
+
+  }, [])
+
+  function searchHandler(ev){
+    ev.preventDefault()
+    dispatch(globalActions.setSearchItem({
+      pathname: pathname,
+      term:searchValue.current.value
+    }))
+
   }
 
   const navigation = [
@@ -86,6 +104,8 @@ export default function MainLayout() {
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
+
+ 
 
   return (
     <>
@@ -195,7 +215,7 @@ export default function MainLayout() {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
+           <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
@@ -268,13 +288,12 @@ export default function MainLayout() {
                   pathname == "/dashboard/jobs" ||
                   pathname == "/dashboard/users" ||
                   pathname == "/dashboard/payments" ||
-                  pathname == "/dashboard/faq"
+                  pathname == "/dashboard/faqs"
                     ? undefined
                     : { opacity: "0", pointerEvents: "none" }
                 }
                 className="relative flex flex-1"
-                action="#"
-                method="GET"
+                onSubmit={searchHandler}
               >
                 <label htmlFor="search-field" className="sr-only">
                   Search
@@ -289,6 +308,7 @@ export default function MainLayout() {
                   placeholder="Search..."
                   type="search"
                   name="search"
+                  ref={searchValue}
                 />
               </form>
 

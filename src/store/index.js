@@ -1,4 +1,3 @@
-import { createStore } from "redux";
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -6,7 +5,8 @@ const initialState = {
   jobs: [],
   establishments: [],
   users: [],
-  loggedUser: null
+  loggedUser: null,
+  searchItem: null,
 };
 
 const globalSlice = createSlice({
@@ -27,6 +27,9 @@ const globalSlice = createSlice({
     },
     setLoggedUser(state, action) {
       state.loggedUser = action.payload;
+    },
+    setSearchItem(state, action) {
+      state.searchItem = action.payload;
     },
   },
 });

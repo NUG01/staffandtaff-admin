@@ -71,8 +71,8 @@ const router = createBrowserRouter([
 
 let user = {};
 BasicAxios.get("admin-user")
-  .then((res) => {
-    user = res.data.user;
+.then((res) => {
+  user = res.data.user;
 
     if (user) {
       ReactDOM.createRoot(document.getElementById("root")).render(
