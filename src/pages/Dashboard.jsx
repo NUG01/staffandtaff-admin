@@ -16,6 +16,7 @@ import {
   HomeIcon,
   UsersIcon,
   XMarkIcon,
+  NewspaperIcon
 } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
@@ -76,7 +77,7 @@ export default function MainLayout() {
     {
       name: "Terms & Conditions",
       href: "/dashboard/terms",
-      icon: ChartPieIcon,
+      icon: NewspaperIcon,
       current: pathname == "/dashboard/terms" ? true : false,
     },
   ];
