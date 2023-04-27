@@ -24,7 +24,13 @@ export default function Login() {
       password: passwordRef.current.value,
     })
       .then((res) => {
-        location.href = '/dashboard'
+        if (res.data.role_id != 1) {
+          BasicAxios.post("logout").then(() => {
+            location.href = "/";
+          });
+        } else {
+          location.href = "/dashboard";
+        }
       })
       .catch((err) => {
         alert("Something went wrong");

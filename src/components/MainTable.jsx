@@ -3,32 +3,43 @@ import BasicAxios from "../helpers/axios";
 import { useState, useEffect } from "react";
 import { Load, RemoveLoader } from "../hooks/LoaderHandle";
 import { useSelector } from "react-redux";
+import AlertModal from "../components/AlertModal";
 
 function filterByValue(array, string) {
- const result = array.filter(obj => {
-    let includes = false
+  const result = array.filter((obj) => {
+    let includes = false;
     const searchTermsArr = string.split(" ");
 
-    let values = Object.values(obj)
+    let values = Object.values(obj);
 
-    values.forEach(item => {
-        searchTermsArr.forEach(term => {
-          if(item.toString().toLowerCase().includes(term.toString().toLowerCase())) {
-            includes = true
-            return
-          }
-        })
-    })
+    values.forEach((item) => {
+      searchTermsArr.forEach((term) => {
+        if (
+          item.toString().toLowerCase().includes(term.toString().toLowerCase())
+        ) {
+          includes = true;
+          return;
+        }
+      });
+    });
 
-    return includes
+    return includes;
   });
 
-  return result
+  return result;
 }
 
 export default function MainTable(props) {
+  const [alertModal, setAlertModal] = useState(false);
+  const [currentId, setCurrentId] = useState(null);
+
+  function modalHandler(id) {
+    setCurrentId(id);
+    setAlertModal(true);
+  }
+
   const { pathname } = useLocation();
-  const searchItemValue=useSelector(state=>state.searchItem)
+  const searchItemValue = useSelector((state) => state.searchItem);
 
   let data;
   let columnNames;
@@ -36,9 +47,8 @@ export default function MainTable(props) {
   let columns;
   if (props.data[0]) {
     data = props.data;
-    if(searchItemValue && searchItemValue.pathname== pathname){
-
-    data= filterByValue(data, searchItemValue.term)
+    if (searchItemValue && searchItemValue.pathname == pathname) {
+      data = filterByValue(data, searchItemValue.term);
     }
     const myObj = props.data[0];
     keys = Object.keys(myObj);
@@ -83,6 +93,15 @@ export default function MainTable(props) {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
+      {alertModal && (
+        <div className="z-50">
+          <AlertModal
+            delete={() => deleteHandler(currentId)}
+            state={alertModal}
+            close={() => setAlertModal(false)}
+          ></AlertModal>
+        </div>
+      )}
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">
@@ -160,7 +179,7 @@ export default function MainTable(props) {
                       >
                         <span
                           onClick={() =>
-                            deleteHandler(
+                            modalHandler(
                               props.type != "subscriptions"
                                 ? item.id
                                 : item.stripe_id
