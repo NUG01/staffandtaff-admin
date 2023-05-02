@@ -8,16 +8,14 @@ import { useLocation } from "react-router-dom";
 
 function Faqs() {
   const [data, setData] = useState([]);
-  const dispatch=useDispatch()
-  const location=useLocation()
+  const dispatch = useDispatch();
+  const location = useLocation();
 
- 
-  
   useEffect(() => {
-    Load()
+    Load();
     BasicAxios.get("admin/faqs").then((res) => {
       setData(res.data.data);
-      RemoveLoader()
+      RemoveLoader();
     });
   }, []);
 

@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 const mediaAxios = Axios.create({
-  baseURL: "http://localhost:8000/api/v1",
+  baseURL: import.meta.env.VITE_APP_BACKEND_URL,
   headers: {
     "Content-Type": "multipart/form-data",
   },

@@ -14,7 +14,6 @@ function User() {
     });
   }, []);
 
-  console.log(data);
   return (
     <>
       <MainDetails data={data} type="establishment"></MainDetails>

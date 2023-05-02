@@ -18,7 +18,7 @@ import {
   HomeIcon,
   UsersIcon,
   XMarkIcon,
-  NewspaperIcon
+  NewspaperIcon,
 } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
@@ -28,8 +28,8 @@ import {
 export default function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
-  const searchValue=useRef()
-  const dispatch=useDispatch()
+  const searchValue = useRef();
+  const dispatch = useDispatch();
 
   const location = useLocation();
   const pathname = location.pathname;
@@ -41,18 +41,18 @@ export default function MainLayout() {
     });
   }
 
-  useEffect(()=>{
-    dispatch(globalActions.setSearchItem(null))
+  useEffect(() => {
+    dispatch(globalActions.setSearchItem(null));
+  }, []);
 
-  }, [])
-
-  function searchHandler(ev){
-    ev.preventDefault()
-    dispatch(globalActions.setSearchItem({
-      pathname: pathname,
-      term:searchValue.current.value
-    }))
-
+  function searchHandler(ev) {
+    ev.preventDefault();
+    dispatch(
+      globalActions.setSearchItem({
+        pathname: pathname,
+        term: searchValue.current.value,
+      })
+    );
   }
 
   const navigation = [
@@ -104,8 +104,6 @@ export default function MainLayout() {
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
-
- 
 
   return (
     <>
@@ -215,7 +213,7 @@ export default function MainLayout() {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-           <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
@@ -322,17 +320,13 @@ export default function MainLayout() {
                 <Menu as="div" className="relative">
                   <Menu.Button className="-m-1.5 flex items-center p-1.5">
                     <span className="sr-only">Open user menu</span>
-                    <img
-                      className="h-8 w-8 rounded-full bg-gray-50"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
-                    />
+
                     <span className="hidden lg:flex lg:items-center">
                       <span
                         className="ml-4 text-sm font-semibold leading-6 text-gray-900"
                         aria-hidden="true"
                       >
-                        Tom Cook
+                        Admin
                       </span>
                       <ChevronDownIcon
                         className="ml-2 h-5 w-5 text-gray-400"
